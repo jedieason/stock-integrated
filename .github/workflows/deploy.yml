@@ -2,10 +2,10 @@ name: Update data and deploy Pages
 on:
   push:
     branches: [main]
-    paths-ignore: ['docs/**', '**.md']
+    paths-ignore: ["docs/**", "**.md"]
   workflow_dispatch:
   schedule:
-    - cron: '15 9,12 * * 1-5'
+    - cron: "15 9,12 * * 1-5"
 permissions:
   contents: read
 concurrency:
@@ -24,11 +24,11 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: '24'
+          node-version: "24"
           cache: npm
       - uses: actions/setup-python@v6
         with:
-          python-version: '3.13'
+          python-version: "3.13"
       - run: npm ci
       - run: npm test
       - name: Collect official daily data

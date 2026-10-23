@@ -1,5 +1,6 @@
 # Quantitative formulas
 
+- YoY: latest monthly value divided by the value in the same calendar month one year earlier, minus one. Missing base month ->null; never approximate by shifting 12 observed rows when months are missing.
 - SMA(n): arithmetic mean of n observations; returns null until a full valid window exists.
 - EMA(n): first value = n-point SMA, then alpha=2/(n+1). Missing values reset warm-up.
 - WMA(n): weights 1..n, newest largest.
