@@ -1,0 +1,71 @@
+name: Update data and deploy Pages
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['docs/**', '**.md']
+  workflow_dispatch:
+  schedule:
+    - cron: '15 9,12 * * 1-5'
+permissions:
+  contents: read
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  checks:
+    uses: ./.github/workflows/ci.yml
+  build:
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - run: npm ci
+      - run: npm test
+      - name: Collect official daily data
+        id: data
+        continue-on-error: true
+        run: python scripts/update_data.py
+      - name: Retain and disclose stale snapshot on collection failure
+        if: steps.data.outcome == 'failure'
+        run: |
+          echo '::warning::Data collection failed; deploying the last validated dated snapshot. Inspect the run logs.'
+          python -c "import json,pathlib; p=pathlib.Path('data/market.json'); d=json.loads(p.read_text()); d.setdefault('errors',[]).append({'source':'ingestion-job','code':'SOURCE_UNAVAILABLE','message':'Latest Actions data job failed. Previous available observations retained; inspect workflow logs.'}); p.write_text(json.dumps(d,ensure_ascii=False))"
+      - name: Validate actual data contract
+        run: node scripts/validate-data.mjs
+      - name: Persist validated observations
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: update official dated market observations'
+            git push
+          fi
+      - run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
