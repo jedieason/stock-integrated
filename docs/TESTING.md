@@ -13,3 +13,5 @@ See PROGRESS.md for actually observed run results. New execution rules must incl
 Observed GitHub Actions run 39967694637: all 12 desktop/mobile E2E tests passed in 8.9 seconds; tests, collection, build and deploy succeeded. Subsequent date-alignment repair adds a 22nd Node test, bringing the local quantitative/provider total to 29.
 
 Observed run 39969413245: stable Chrome 155; 12/12 E2E tests passed in 38.9s; all three deployment jobs succeeded, with 1,319 securities, 3,840 bars, six macro series and zero collection errors. Production inspection then exposed old module-cache reuse, repaired with content-hashed code assets and a packaging regression test.
+
+Final acceptance run 39970238307: 30 unit/provider/packaging checks and 12 E2E cases passed; the actual dist/ artifact was deployed and independently inspected in the live browser.
