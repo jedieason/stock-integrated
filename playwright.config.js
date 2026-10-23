@@ -7,9 +7,9 @@ export default defineConfig({
     channel: process.env.CI ? "chrome" : undefined,
   },
   webServer: {
-    command: "python3 -m http.server 5173 --bind 127.0.0.1",
+    command: "python3 -m http.server 5173 --bind 127.0.0.1 --directory dist",
     url: "http://127.0.0.1:5173",
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
   },
   projects: [
     { name: "desktop", use: { viewport: { width: 1440, height: 1000 } } },
