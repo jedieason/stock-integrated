@@ -10,7 +10,7 @@
 | TWSE history | `/indicesReport/MI_5MINS_HIST?response=json&date=YYYYMM01` | daily TAIEX OHLC by month; no inferred intraday |
 | FRED | `/data/SERIES.txt` | official downloadable public observations; currently returns a table plus deferred HTML rows |
 
-Base: <https://openapi.twse.com.tw/v1/> and <https://www.twse.com.tw/>. Official terms: <https://www.twse.com.tw/zh/terms/terms.html>.
+Base: <https://openapi.twse.com.tw/v1/> and <https://www.twse.com.tw/>. Official terms: <https://www.twse.com.tw/zh/terms/use.html>.
 
 FRED series: DGS10, DGS2, FEDFUNDS, UNRATE, CPIAUCSL, DEXTAUS. Federal statistical releases only; we do not redistribute proprietary US equity or VIX feeds. Each series links to its source and <https://fred.stlouisfed.org/legal/>. Review provider terms before commercial redistribution or expanding coverage; public accessibility is not a universal license.
 

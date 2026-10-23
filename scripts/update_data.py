@@ -136,7 +136,7 @@ def main():
         sign=-1 if item.get('漲跌')=='-' else 1
         indices.append(dict(name=name,date=date,price=number(item.get('收盤指數')),change=sign*(number(item.get('漲跌點數')) or 0),pct=number(item.get('漲跌百分比'))))
     stocks.sort(key=lambda x:x['turnover'] or 0,reverse=True)
-    market={'schemaVersion':1,'ingestedAt':ingested,'observationDate':max(x['date'] for x in stocks),'provider':'TWSE','frequency':'daily','adjustment':'unadjusted','currency':'TWD','stocks':stocks,'indices':indices,'errors':errors,'sources':{k:base+p for k,p in endpoints.items()},'licenseUrl':'https://www.twse.com.tw/zh/terms/terms.html','publicationTimestamp':None,'availableAt':ingested}
+    market={'schemaVersion':1,'ingestedAt':ingested,'observationDate':max(x['date'] for x in stocks),'provider':'TWSE','frequency':'daily','adjustment':'unadjusted','currency':'TWD','stocks':stocks,'indices':indices,'errors':errors,'sources':{k:base+p for k,p in endpoints.items()},'licenseUrl':'https://www.twse.com.tw/zh/terms/use.html','publicationTimestamp':None,'availableAt':ingested}
     atomic_json(ROOT/'data/market.json',market)
     history_path=ROOT/'data/history.json'
     history=json.loads(history_path.read_text()) if history_path.exists() else {'schemaVersion':1,'series':{},'issues':{}}

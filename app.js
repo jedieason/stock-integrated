@@ -1184,7 +1184,7 @@ function settingsPage() {
     [
       "TWSE 資料使用條款",
       "依官方資料使用與再散布規範",
-      "https://www.twse.com.tw/zh/terms/terms.html",
+      "https://www.twse.com.tw/zh/terms/use.html",
     ],
     [
       "FRED · Federal Reserve Bank of St. Louis",
